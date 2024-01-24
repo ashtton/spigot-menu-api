@@ -99,7 +99,7 @@ public class OnlineCommand {
     // of the online players and allows
     // you to teleport to whoever you want.
     
-    @Menu(id = "online", title = "Online Players", size = 27)
+    @Menu(id = "online", title = "Online Players (%p/%mp)", size = 27)
     public void onlineMenu(Player player, MenuConfig config) {
         config.button(Button.of(Item.of(Material.ARROW)
                 .name("&cPrevious Page")
@@ -119,11 +119,11 @@ public class OnlineCommand {
                 )
         ).slot(8).type(ButtonType.NEXT_PAGINATION));
 
-        for (int slot = 1; slot < 7; slot++) {
+        for (int slot = 1; slot < 8; slot++) {
             config.button(Button.of(Item.of(Material.BLACK_STAINED_GLASS_PANE).name(" ")).slot(slot));
         }
 
-        config.paginateRange(9, 26);
+        config.paginateRange(9, 36);
         config.paginated(Bukkit.getOnlinePlayers().stream()
                 .map(skull -> Button.of(Item.of(Material.PLAYER_HEAD)
                         .skull(skull)
