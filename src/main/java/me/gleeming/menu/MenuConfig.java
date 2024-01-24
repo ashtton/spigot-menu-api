@@ -6,16 +6,16 @@ import lombok.RequiredArgsConstructor;
 import me.gleeming.menu.button.Button;
 import me.gleeming.menu.type.MenuType;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @RequiredArgsConstructor(staticName = "of", access = AccessLevel.PACKAGE)
 @Getter
 public class MenuConfig {
 
-    private final String title;
+    private final String id;
     private final int size;
+
+    private String title;
 
     private MenuType menuType = MenuType.NORMAL;
 
@@ -23,6 +23,11 @@ public class MenuConfig {
 
     private final List<Button> paginatedItems = new ArrayList<>();
     private final List<Integer> paginatedSlots = new ArrayList<>();
+
+    public MenuConfig title(String title) {
+        this.title = title;
+        return this;
+    }
 
     public MenuConfig button(Button button) {
         buttons.add(button);
@@ -78,4 +83,30 @@ public class MenuConfig {
         return this;
     }
 
+    public int getMaxPage() {
+        return getPagination().size();
+    }
+
+    public Map<Integer, List<Button>> getPagination() {
+        Map<Integer, List<Button>> pages = new HashMap<>();
+        int page = 1;
+
+        for (Button button : paginatedItems) {
+            List<Button> buttons = pages.getOrDefault(page, new ArrayList<>());
+
+            if (paginatedSlots.size() == buttons.size()) {
+                page++;
+                buttons = pages.getOrDefault(page, new ArrayList<>());
+            }
+
+            buttons.add(button);
+            pages.put(page, buttons);
+        }
+
+        return pages;
+    }
+
+    public boolean isPaginated() {
+        return getPaginatedSlots().size() > 0;
+    }
 }

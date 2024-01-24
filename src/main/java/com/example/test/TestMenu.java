@@ -24,7 +24,7 @@ public class TestMenu extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(this, this);
     }
 
-    @Menu(id = "test", title = "Test Menu", size = 36)
+    @Menu(id = "test", title = "Test Menu (%p/%mp)", size = 36)
     public void testMen5u(Player player, MenuConfig config) {
         config.button(Button.of(Item.of(Material.ARROW)
                 .name("&cPrevious Page")
@@ -44,21 +44,23 @@ public class TestMenu extends JavaPlugin implements Listener {
                 )
         ).slot(8).type(ButtonType.NEXT_PAGINATION));
 
-        for (int slot = 1; slot < 7; slot++) {
+        for (int slot = 1; slot < 8; slot++) {
             config.button(Button.of(Item.of(Material.BLACK_STAINED_GLASS_PANE).name(" ")).slot(slot));
         }
 
-        config.paginateRange(9, 26);
-        config.paginated(Bukkit.getOnlinePlayers().stream()
-                .map(skull -> Button.of(Item.of(Material.PLAYER_HEAD)
-                        .skull(skull)
-                        .name(String.format("&a%s", skull.getName()))
-                        .lore(
-                                "",
-                                String.format("&eClick to teleport to &a%s&e.", skull.getName()),
-                                ""
-                        )).action(ClickType.LEFT, () -> player.teleport(skull)))
-                .collect(Collectors.toList()));
+        config.paginateRange(9, 36);
+        for (int i = 0; i < 58; i++) {
+            config.paginated(Bukkit.getOnlinePlayers().stream()
+                    .map(skull -> Button.of(Item.of(Material.PLAYER_HEAD)
+                            .skull(skull)
+                            .name(String.format("&a%s", skull.getName()))
+                            .lore(
+                                    "",
+                                    String.format("&eClick to teleport to &a%s&e.", skull.getName()),
+                                    ""
+                            )).action(ClickType.LEFT, () -> player.teleport(skull)))
+                    .collect(Collectors.toList()));
+        }
     }
 
     @Menu(id = "example", title = "Test Menu", size = 36)
