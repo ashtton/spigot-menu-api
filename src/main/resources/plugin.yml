@@ -1,5 +1,0 @@
-name: test
-author: gl
-main: com.example.test.TestMenu
-version: 1.0-SNAPSHOT
-api-version: 1.20
